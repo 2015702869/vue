@@ -17,7 +17,7 @@
           href="https://forum.vuejs.org"
           target="_blank"
         >
-        <router-link to="/"><el-button type="danger">危险按钮</el-button></router-link>副业
+        <router-link v-bind:to="{name:'login',params:{userId:123}}"><el-button type="danger">危险按钮</el-button></router-link>副业
           Forum
         </a>
       </li>
@@ -87,7 +87,6 @@
 
 <script>
 export default {
-  name: 'HelloWorld',
   data () {
     return {
       msg: 'Welcome to Your Vue.js App'
