@@ -93,11 +93,9 @@ export default {
     }
   },
   methods: {
-    poot () {
-      this.$http.get('http://www.lime.com/admin/index').then(function (response) {
-        console.log(response.body)
-      }, function (response) {
-        console.log(response)
+    Initializing () {
+      this.request.post('/admin/login/login', this.ruleForm).then(res => {
+        alert(1)
       })
     }
   }

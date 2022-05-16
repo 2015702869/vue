@@ -2,32 +2,14 @@
 namespace app\modules\admin\controllers;
 
 use yii\web\Controller;
-use yii\filters\Cors;
 use yii\data\Pagination;
 use app\modules\admin\models\Login;
 use app\modules\admin\models\Admin;
+use app\commands\BackController;
 
-class LoginController extends Controller
+class LoginController extends BackController
 {
 	public $enableCsrfValidation = false;//关闭csrf表单验证
-	public function behaviors()
-	{
-		//设置请求头
-	    return [
-	        'corsFilter'=>[
-	            'class' => Cors::className(),
-	            'cors'=>[
-	                'Access-Control-Allow-Credentials' => false,
-	                'Origin' => ['*'],
-	            ]
-	        ]
-	    ];
-	}
-	public function init(){
-      	parent::init();	
-		\Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;//设置返回类型
-    }
-
 	public function actionLogin()
 	{
 		$request = \Yii::$app->request;
@@ -72,12 +54,11 @@ class LoginController extends Controller
 			throw new \yii\web\UnauthorizedHttpException;//请求方法错误返回错误
 		}
 	}
+	/**
+	 * 首页
+	 */
 	public function actionAdd()
 	{
-		/*$admin = new Admin();
-		$admin->username = 'admin';
-		$admin->password = '$2y$10$5IPx5paOU0snyClSkdYrxuZGykE.D9k8OFwBrhSTNVpvI6X9GYFka';
-		$admin->nickname = '图文';
-		$admin->save();*/
+		return \Yii::$app->controller->module->id.'/'.\Yii::$app->controller->id.'/'.\Yii::$app->controller->action->id;	
 	}
 }
