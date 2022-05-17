@@ -1,87 +1,84 @@
 <template>
-  <div class="hello">
-    <h1>{{ msg }}</h1>
-    <h2>Essential Links</h2>
-    <ul>
-      <li>
-        <a
-          href="https://vuejs.org"
-          target="_blank"
-        >
-          Core Docs
-        </a>
-        <button @click="poot('hi')">Say hi</button>
-      </li>
-      <li>
-        <a
-          href="https://forum.vuejs.org"
-          target="_blank"
-        >
-        <router-link v-bind:to="{name:'login',params:{userId:123}}"><el-button type="danger">危险按钮</el-button></router-link>副业
-          Forum
-        </a>
-      </li>
-      <li>
-        <a
-          href="https://chat.vuejs.org"
-          target="_blank"
-        >
-          Community Chat
-        </a>
-      </li>
-      <li>
-        <a
-          href="https://twitter.com/vuejs"
-          target="_blank"
-        >
-          Twitter
-        </a>
-      </li>
-      <br>
-      <li>
-        <a
-          href="http://vuejs-templates.github.io/webpack/"
-          target="_blank"
-        >
-          Docs for This Template
-        </a>
-      </li>
-    </ul>
-    <h2>Ecosystem</h2>
-    <ul>
-      <li>
-        <a
-          href="http://router.vuejs.org/"
-          target="_blank"
-        >
-          vue-router
-        </a>
-      </li>
-      <li>
-        <a
-          href="http://vuex.vuejs.org/"
-          target="_blank"
-        >
-          vuex
-        </a>
-      </li>
-      <li>
-        <a
-          href="http://vue-loader.vuejs.org/"
-          target="_blank"
-        >
-          vue-loader
-        </a>
-      </li>
-      <li>
-        <a
-          href="https://github.com/vuejs/awesome-vue"
-          target="_blank"
-        >
-          awesome-vue
-        </a>
-      </li>
-    </ul>
+  <div>
+    <el-container>
+      <el-aside style="width: 200px;">
+        <el-header>
+          <img :src="imgSrc" alt="" style="width: 100%;height: 100%;">
+        </el-header>
+        <el-menu :default-openeds="['1', '3']"
+        style="border-right: none; text-align: left">
+          <el-submenu index="1">
+            <template slot="title"><i class="el-icon-message"></i>导航一</template>
+            <el-menu-item-group>
+              <template slot="title">分组一</template>
+              <el-menu-item index="1-1">选项1</el-menu-item>
+              <el-menu-item index="1-2">选项2</el-menu-item>
+            </el-menu-item-group>
+            <el-menu-item-group title="分组2">
+              <el-menu-item index="1-3">选项3</el-menu-item>
+            </el-menu-item-group>
+            <el-submenu index="1-4">
+              <template slot="title">选项4</template>
+              <el-menu-item index="1-4-1">选项4-1</el-menu-item>
+            </el-submenu>
+          </el-submenu>
+          <el-submenu index="2">
+            <template slot="title"><i class="el-icon-menu"></i>导航二</template>
+            <el-menu-item-group>
+              <template slot="title">分组一</template>
+              <el-menu-item index="2-1">选项1</el-menu-item>
+              <el-menu-item index="2-2">选项2</el-menu-item>
+            </el-menu-item-group>
+            <el-menu-item-group title="分组2">
+              <el-menu-item index="2-3">选项3</el-menu-item>
+            </el-menu-item-group>
+            <el-submenu index="2-4">
+              <template slot="title">选项4</template>
+              <el-menu-item index="2-4-1">选项4-1</el-menu-item>
+            </el-submenu>
+          </el-submenu>
+          <el-submenu index="3">
+            <template slot="title"><i class="el-icon-setting"></i>导航三</template>
+            <el-menu-item-group>
+              <template slot="title">分组一</template>
+              <el-menu-item index="3-1">选项1</el-menu-item>
+              <el-menu-item index="3-2">选项2</el-menu-item>
+            </el-menu-item-group>
+            <el-menu-item-group title="分组2">
+              <el-menu-item index="3-3">选项3</el-menu-item>
+            </el-menu-item-group>
+            <el-submenu index="3-4">
+              <template slot="title">选项4</template>
+              <el-menu-item index="3-4-1">选项4-1</el-menu-item>
+            </el-submenu>
+          </el-submenu>
+        </el-menu>
+      </el-aside>
+      <el-container>
+        <el-header style="text-align: right; font-size: 12px">
+          <el-menu
+            :default-active="activeIndex2"
+            class="el-menu-demo"
+            mode="horizontal">
+            <el-menu-item index="1">处理中心</el-menu-item>
+            <el-submenu index="2">
+              <template slot="title">我的工作台</template>
+              <el-menu-item index="2-1">选项1</el-menu-item>
+              <el-menu-item index="2-2">选项2</el-menu-item>
+              <el-menu-item index="2-3">选项3</el-menu-item>
+              <el-submenu index="2-4">
+                <template slot="title">选项4</template>
+                <el-menu-item index="2-4-1">选项1</el-menu-item>
+                <el-menu-item index="2-4-2">选项2</el-menu-item>
+                <el-menu-item index="2-4-3">选项3</el-menu-item>
+              </el-submenu>
+            </el-submenu>
+            <el-menu-item index="3" disabled>消息中心</el-menu-item>
+            <el-menu-item index="4"><a href="https://www.ele.me" target="_blank">订单管理</a></el-menu-item>
+          </el-menu>
+        </el-header>
+      </el-container>
+    </el-container>
   </div>
 </template>
 
@@ -89,33 +86,17 @@
 export default {
   data () {
     return {
-      msg: 'Welcome to Your Vue.js App'
+      activeIndex: '1',
+      activeIndex2: '1',
+      msg: 'Welcome to Your Vue.js App',
+      imgSrc: require('../assets/20201124032511.png')
     }
   },
   methods: {
-    Initializing () {
-      this.request.post('/admin/login/login', this.ruleForm).then(res => {
-        alert(1)
-      })
-    }
   }
 }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-h1, h2 {
-  font-weight: normal;
-}
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-a {
-  color: #42b983;
-}
+<style>
 </style>
