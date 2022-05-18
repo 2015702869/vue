@@ -54,7 +54,7 @@
   </div>
 </template>
 <script>
-import { GVerify } from '../../static/js/verif'
+import { GVerify } from '../../../static/js/verif'
 export default {
   name: 'Home',
   data () {
@@ -70,7 +70,7 @@ export default {
           {required: true, message: '请输入验证码', trigger: 'blur'}
         ]
       },
-      imgSrc: require('../assets/beijing.jpg'),
+      imgSrc: require('../../assets/beijing.jpg'),
       sgi: {
         height: '50%',
         width: '100%',

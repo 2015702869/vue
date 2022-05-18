@@ -1,21 +1,23 @@
 <template>
   <el-menu :default-openeds="openeds"
     style="border-right: none; text-align: left">
-      <el-submenu v-for="(itme ,index) in meun" :index="itme.id.toString()" :key="index">
-        <template slot="title"><i :class="itme.icon"></i>{{ itme.label }}</template>
-         <el-menu-item-group>
-          <template slot="title">分组一</template>
-          <el-menu-item :index="'itme.id' + -1">选项1</el-menu-item>
-          <el-menu-item :index="'itme.id' + -2">选项2</el-menu-item>
-        </el-menu-item-group>
-        <el-menu-item-group title="分组2">
-          <el-menu-item :index="'itme.id' + -3">选项3</el-menu-item>
-        </el-menu-item-group>
-        <el-submenu :index="'itme.id' + -4">
-          <template slot="title">选项4</template>
-          <el-menu-item :index="'itme.id' + -4-1">选项4-1</el-menu-item>
+      <div v-for="(item ,index) in meun" :key="index">
+        <el-submenu v-if="item.children && item.children.length" :index="item.path">
+          <template slot="title">
+          <i :class="item.icon"></i>
+            <span>{{ item.name }}</span>
+          </template>
+          <template v-for="itemChild in item.children">
+            <el-menu-item  :index="itemChild.path" :key="itemChild.path">
+              <span slot="title">{{itemChild.name}}</span>
+            </el-menu-item>
+          </template>
         </el-submenu>
-      </el-submenu>
+        <el-menu-item v-else :index="item.path" :key="item.path">
+          <i :class="item.icon"></i>
+          <span slot="title">{{item.name}}</span>
+        </el-menu-item>
+      </div>
     </el-menu>
 </template>
 <script>
@@ -26,8 +28,7 @@ export default {
       type: Array,
       default: function () {
         return [
-          '2',
-          '3'
+          '/1'
         ]
       }
     },
@@ -36,29 +37,39 @@ export default {
       default: function () {
         return [
           {
-            id: '1',
-            label: '仓库管理',
-            icon: 'el-icon-message'
-          },
-          {
-            id: '2',
-            label: '商品管理',
+            path: '/4',
+            name: '首页',
+            icon: 'el-icon-house'
+          }, {
+            path: '/5',
+            name: '商品管理',
+            icon: 'el-icon-menu',
+            children: [
+              {
+                path: '/54',
+                name: '商品仓库'
+              }, {
+                path: '/55',
+                name: '商品列表'
+              }
+            ]
+          }, {
+            path: '/6',
+            name: '用户管理',
+            icon: 'el-icon-user',
+            children: [
+              {
+                path: '/57',
+                name: '普通用户'
+              }, {
+                path: '/58',
+                name: '会员用户'
+              }
+            ]
+          }, {
+            path: '/47',
+            name: '导航四',
             icon: 'el-icon-menu'
-          },
-          {
-            id: '3',
-            label: '订单管理',
-            icon: 'el-icon-document'
-          },
-          {
-            id: '4',
-            label: '订单管理',
-            icon: 'el-icon-document'
-          },
-          {
-            id: '5',
-            label: '订单管理',
-            icon: 'el-icon-document'
           }
         ]
       }

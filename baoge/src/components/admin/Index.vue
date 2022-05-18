@@ -27,7 +27,19 @@
               </el-submenu>
             </el-submenu>
             <el-menu-item index="3" disabled>消息中心</el-menu-item>
-            <el-menu-item index="4"><a href="https://www.ele.me" target="_blank">订单管理</a></el-menu-item>
+            <el-dropdown>
+              <span class="el-dropdown-link">
+                <div class="demo-type" style="margin-top: 10px;">
+                  <el-avatar :size="40">
+                    <img src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"/>
+                  </el-avatar>
+                </div>
+              </span>
+              <el-dropdown-menu slot="dropdown">
+                <el-dropdown-item>个人中心</el-dropdown-item>
+                <el-dropdown-item>退出登录</el-dropdown-item>
+              </el-dropdown-menu>
+            </el-dropdown>
           </el-menu>
         </el-header>
       </el-container>
@@ -42,7 +54,7 @@ export default {
       activeIndex: '1',
       activeIndex2: '1',
       msg: 'Welcome to Your Vue.js App',
-      imgSrc: require('../assets/20201124032511.png')
+      imgSrc: require('../../assets/20201124032511.png')
     }
   },
   methods: {
@@ -51,5 +63,8 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style>
+<style  scoped>
+  /deep/ :focus {
+    outline: 0;
+  }
 </style>
