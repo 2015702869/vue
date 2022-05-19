@@ -1,11 +1,13 @@
 <template>
   <div>
     <el-container>
-      <el-aside style="width: 200px;">
-        <el-header>
-          <img :src="imgSrc" alt="" style="width: 100%;height: 100%;">
-        </el-header>
-        <XxButton></XxButton>
+      <el-aside :style="menu" class="menu">
+        <el-scrollbar style="width:100%;">
+          <el-header>
+            <img :src="imgSrc" alt="" style="width: 100%;height: 100%;">
+          </el-header>
+          <XxButton></XxButton>
+        </el-scrollbar>
       </el-aside>
       <el-container>
         <el-header style="text-align: right; font-size: 12px">
@@ -42,6 +44,18 @@
             </el-dropdown>
           </el-menu>
         </el-header>
+        <el-main>
+          <el-tabs v-model="editableTabsValue" type="card" closable>
+            <el-tab-pane
+              v-for="(item) in editableTabs"
+              :key="item.name"
+              :label="item.title"
+              :name="item.name"
+            >
+              <tab-component :is=item.content></tab-component>
+            </el-tab-pane>
+          </el-tabs>
+        </el-main>
       </el-container>
     </el-container>
   </div>
@@ -54,7 +68,22 @@ export default {
       activeIndex: '1',
       activeIndex2: '1',
       msg: 'Welcome to Your Vue.js App',
-      imgSrc: require('../../assets/20201124032511.png')
+      imgSrc: require('../../assets/20201124032511.png'),
+      menu: {
+        width: '230px',
+        height: document.documentElement.clientHeight - 16 + 'px'
+      },
+      editableTabsValue: '2',
+      editableTabs: [{
+        title: 'Tab 1',
+        name: '1',
+        content: 'XxButton'
+      }, {
+        title: 'Tab 2',
+        name: '2',
+        content: 'XxButton'
+      }],
+      tabIndex: 2
     }
   },
   methods: {
@@ -66,5 +95,15 @@ export default {
 <style  scoped>
   /deep/ :focus {
     outline: 0;
+  }
+  .menu{
+    border-right: solid 1px #e6e6e6;
+  }
+  ::-webkit-scrollbar {
+    width: 8px;/* 滚动条宽度 */
+  }
+  ::-webkit-scrollbar-thumb {
+    background-color: #eaecf1;
+    border-radius: 3px;
   }
 </style>

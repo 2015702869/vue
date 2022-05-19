@@ -1,6 +1,6 @@
 <template>
   <el-menu :default-openeds="openeds"
-    style="border-right: none; text-align: left">
+    style="text-align: left;border-right: none;">
       <div v-for="(item ,index) in meun" :key="index">
         <el-submenu v-if="item.children && item.children.length" :index="item.path">
           <template slot="title">
@@ -8,7 +8,17 @@
             <span>{{ item.name }}</span>
           </template>
           <template v-for="itemChild in item.children">
-            <el-menu-item  :index="itemChild.path" :key="itemChild.path">
+            <el-submenu v-if="itemChild.children && itemChild.children.length" :index="itemChild.path" :key="itemChild.path">
+              <template slot="title">
+                <span>{{ itemChild.name }}</span>
+              </template>
+              <template v-for="itemChilds in itemChild.children">
+                <el-menu-item  :index="itemChilds.path" :key="itemChilds.path">
+                  <span slot="title">{{itemChilds.name}}</span>
+                </el-menu-item>
+              </template>
+            </el-submenu>
+            <el-menu-item  v-else :index="itemChild.path" :key="itemChild.path">
               <span slot="title">{{itemChild.name}}</span>
             </el-menu-item>
           </template>
@@ -50,7 +60,16 @@ export default {
                 name: '商品仓库'
               }, {
                 path: '/55',
-                name: '商品列表'
+                name: '商品列表',
+                children: [
+                  {
+                    path: '/60',
+                    name: '商品仓库'
+                  }, {
+                    path: '/61',
+                    name: '商品库'
+                  }
+                ]
               }
             ]
           }, {
