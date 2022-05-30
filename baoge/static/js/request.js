@@ -1,11 +1,20 @@
 import Qs from 'qs'
 import axios from 'axios'
+import VueCookies from 'vue-cookies'
 axios.defaults.baseURL ='http://www.lime.com/';
+axios.defaults.withCredentials=true;
 axios.interceptors.request.use(
   config => {
     config.headers = {
       'Content-Type':'application/x-www-form-urlencoded'
     }
+    if (config.push === '/index') { 
+
+    } else { 
+    if (VueCookies.get('accion')) { 
+        config.headers.token=VueCookies.get('accion');   
+      }   
+    }  
     return config;
   },
   error => {
@@ -21,7 +30,7 @@ axios.interceptors.response.use(
   }
 )
 export default{
-  	post(url,data={}){
+  post(url,data={}){
     return new Promise((resolve,reject) => {
       axios.post(url,Qs.stringify(data))
         .then(response => {

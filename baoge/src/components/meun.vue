@@ -13,17 +13,17 @@
                 <span>{{ itemChild.name }}</span>
               </template>
               <template v-for="itemChilds in itemChild.children">
-                <el-menu-item  :index="itemChilds.path" :key="itemChilds.path">
+                <el-menu-item  :index="itemChilds.path" :key="itemChilds.path" @click="childMethod(itemChilds.path,itemChilds.name)">
                   <span slot="title">{{itemChilds.name}}</span>
                 </el-menu-item>
               </template>
             </el-submenu>
-            <el-menu-item  v-else :index="itemChild.path" :key="itemChild.path">
+            <el-menu-item  v-else :index="itemChild.path" :key="itemChild.path" @click="childMethod(itemChild.path,itemChild.name)">
               <span slot="title">{{itemChild.name}}</span>
             </el-menu-item>
           </template>
         </el-submenu>
-        <el-menu-item v-else :index="item.path" :key="item.path">
+        <el-menu-item v-else :index="item.path" :key="item.path" @click="childMethod(item.path,item.name)">
           <i :class="item.icon"></i>
           <span slot="title">{{item.name}}</span>
         </el-menu-item>
@@ -66,7 +66,7 @@ export default {
                     path: '/60',
                     name: '商品仓库'
                   }, {
-                    path: '/61',
+                    path: '/69',
                     name: '商品库'
                   }
                 ]
@@ -92,6 +92,11 @@ export default {
           }
         ]
       }
+    }
+  },
+  methods: {
+    childMethod (data, names) {
+      this.$emit('updTab', {router: data, title: names})
     }
   }
 }

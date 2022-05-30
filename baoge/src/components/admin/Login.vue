@@ -112,6 +112,8 @@ export default {
           } else {
             this.request.post('/admin/login/login', this.ruleForm).then(res => {
               if (res.data === true) {
+                this.$cookies.set('accion', res.token.accion)
+                this.$cookies.set('session_id', res.token.session_id)
                 this.$message({
                   message: '登录成功',
                   type: 'success',

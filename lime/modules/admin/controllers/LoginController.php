@@ -35,8 +35,15 @@ class LoginController extends BackController
 			    	$session = \Yii::$app->session;
 			    	$session->set('username',$data['username']);
 			    	$session->set('nickname',$data['nickname']);
+			    	$session->set('id',$data['id']);
+			    	$accion = md5($data['username'].'!@#tuken'.time());
+			    	$session->set($data['username'].$data['id'],$accion);
 			    	return \Yii::$app->response->data = [
-						"data" => true
+						"data" => true,
+						"token" => [
+							"accion" => $accion,
+							"session_id" => $data['username'].$data['id']
+						]
 					];
 			    }else{
 			    	return \Yii::$app->response->data = [
@@ -51,7 +58,9 @@ class LoginController extends BackController
 				];
 			}
 		}else{
-			throw new \yii\web\UnauthorizedHttpException;//请求方法错误返回错误
+			\Yii::$app->response->data = [
+				"data" => '网络异常，稍后再试'
+			];
 		}
 	}
 	/**
@@ -59,6 +68,7 @@ class LoginController extends BackController
 	 */
 	public function actionAdd()
 	{
-		return \Yii::$app->controller->module->id.'/'.\Yii::$app->controller->id.'/'.\Yii::$app->controller->action->id;	
+		$session = \Yii::$app->session;
+		$session->set('avs',1);	
 	}
 }

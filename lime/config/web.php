@@ -18,6 +18,12 @@ $config = [
         ],
     ],
     'components' => [
+        'redis' => [
+            'class' => 'yii\redis\Connection',
+            'hostname' => 'localhost',
+            'port' => 6379,
+            'database' => 0,
+        ],
         'helper' => [
             'class' => 'app\common\components\Helper',
             'property' => '123',

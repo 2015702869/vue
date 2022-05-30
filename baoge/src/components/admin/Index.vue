@@ -2,11 +2,11 @@
   <div>
     <el-container>
       <el-aside :style="menu" class="menu">
-        <el-scrollbar style="width:100%;">
+        <el-scrollbar style="width:100%;height: 100%;">
           <el-header>
             <img :src="imgSrc" alt="" style="width: 100%;height: 100%;">
           </el-header>
-          <XxButton></XxButton>
+          <XxButton @updTab="updTab"></XxButton>
         </el-scrollbar>
       </el-aside>
       <el-container>
@@ -44,15 +44,16 @@
             </el-dropdown>
           </el-menu>
         </el-header>
-        <el-main>
-          <el-tabs v-model="editableTabsValue" type="card" closable>
+        <el-main style="padding: 10px 10px 15px 10px;">
+          <el-tabs v-model="editableTabsValue" type="border-card" tab-position="top" @tab-remove="removeTab" >
             <el-tab-pane
               v-for="(item) in editableTabs"
               :key="item.name"
               :label="item.title"
               :name="item.name"
+              closable
             >
-              <tab-component :is=item.content></tab-component>
+            <component :is='item.content'></component>
             </el-tab-pane>
           </el-tabs>
         </el-main>
@@ -73,20 +74,53 @@ export default {
         width: '230px',
         height: document.documentElement.clientHeight - 16 + 'px'
       },
-      editableTabsValue: '2',
+      toekn: {
+        accion: this.$cookies.get('accion'),
+        session_id: this.$cookies.get('session_id')
+      },
+      editableTabsValue: '/1',
       editableTabs: [{
-        title: 'Tab 1',
-        name: '1',
-        content: 'XxButton'
-      }, {
-        title: 'Tab 2',
-        name: '2',
-        content: 'XxButton'
+        title: '仓库管理',
+        name: '/1',
+        content: 'Admin'
       }],
-      tabIndex: 2
+      tabIndex: 1
     }
   },
+  mounted () {
+  },
   methods: {
+    updTab (data) {
+      for (var o in this.editableTabs) {
+        if (this.editableTabs[o].name === data.router) {
+          this.editableTabsValue = data.router
+          return false
+        }
+      }
+      this.editableTabs.push({
+        title: data.title,
+        name: data.router,
+        content: 'XxButton'
+      })
+      this.editableTabsValue = data.router
+    },
+    removeTab (targetName) {
+      console.log(targetName)
+      let tabs = this.editableTabs
+      let activeName = this.editableTabsValue
+      if (activeName === targetName) {
+        tabs.forEach((tab, index) => {
+          if (tab.name === targetName) {
+            let nextTab = tabs[index + 1] || tabs[index - 1]
+            if (nextTab) {
+              activeName = nextTab.name
+            }
+          }
+        })
+      }
+      this.editableTabsValue = activeName
+      this.editableTabs = tabs.filter(tab => tab.name !== targetName)
+    }
   }
 }
 </script>
